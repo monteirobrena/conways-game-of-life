@@ -1,3 +1,3 @@
 class Board < ApplicationRecord
-    validates :size, presence: true
+    validates :size, :attempts, presence: true
 end
