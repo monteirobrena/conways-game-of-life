@@ -20,13 +20,16 @@ ActiveRecord::Schema[7.1].define(version: 2024_02_03_161559) do
 
   create_table "cells", force: :cascade do |t|
     t.integer "board_id", null: false
+    t.integer "main_cell_id"
     t.boolean "alive"
     t.integer "x_position"
     t.integer "y_position"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["board_id"], name: "index_cells_on_board_id"
+    t.index ["main_cell_id"], name: "index_cells_on_main_cell_id"
   end
 
   add_foreign_key "cells", "boards"
+  add_foreign_key "cells", "cells", column: "main_cell_id"
 end
