@@ -10,10 +10,12 @@ capybara-*.html
 *.orig
 rerun.txt
 pickle-email-*.html
+config/
+storage/
 
 # Ignore all logfiles and tempfiles.
-/log/*
-/tmp/*
+log/
+tmp/
 !/log/.keep
 !/tmp/.keep
 
