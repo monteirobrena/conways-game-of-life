@@ -1,5 +1,5 @@
 class Board < ApplicationRecord
-    has_many :cells
+  has_many :cells
 
-    validates :size, :attempts, presence: true
+  validates :size, :attempts, presence: true
 end
