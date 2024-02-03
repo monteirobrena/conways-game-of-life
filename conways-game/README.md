@@ -1,24 +1,38 @@
 # README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
 
-Things you may want to cover:
+## Secrets
 
-* Ruby version
+Access repo settings to store Rails Secret Key Base.
 
-* System dependencies
+Settings > Security > Secrets and variables > Codespaces
 
-* Configuration
+Click on New repository secret button and create a new variable called SECRET_KEY_BASE.
 
-* Database creation
+```
+Name: SECRET_KEY_BASE
 
-* Database initialization
+Secret: <RUN rails secret to get the secret_key_base value>
+```
 
-* How to run the test suite
+## Docker
 
-* Services (job queues, cache servers, search engines, etc.)
+To use Docker is also needed to make the steps to save SECRET_KEY_BASE on GitHub.
 
-* Deployment instructions
+```
+# Create image
+docker-compose build
 
-* ...
+# Create database
+docker-compose run api bundle exec rails db:create
+
+# Create tables
+docker-compose run api bundle exec rails db:migrate
+
+# Start application
+docker-compose up
+
+# Run tests
+docker-compose run api bundle exec rails db:environment:set RAILS_ENV=test
+docker-compose run api bundle exec rspec spec/ 
+```
