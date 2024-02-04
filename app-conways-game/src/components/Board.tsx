@@ -105,14 +105,14 @@ class Board extends React.Component {
     let fillDead = "#fff";
     let fillAlive = "#FF512F";
 
-    for (let row = 1; row <= this.state.size; row++) {
-      for (let col = 1; col <= this.state.size; col++) {
+    for (let col = 1; col <= this.state.size; col++) {
+      for (let row = 1; row <= this.state.size; row++) {
         cellAlive = false;
         x_position = (row * space) - space;
         y_position = (col * space) - space;
 
         this.state.board.cells.forEach((cell) => {
-          if (cell['x_position'] === col && cell['y_position'] === row) {
+          if (cell['x_position'] === row && cell['y_position'] === col) {
             cellAlive = true;
           }
         });
