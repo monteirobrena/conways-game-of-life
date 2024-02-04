@@ -1,4 +1,5 @@
 import React, { ChangeEvent, MouseEvent } from 'react';
+import { v4 as uuidv4 } from 'uuid';
 import './Board.css';
 
 type CreateBoardResponse = {
@@ -10,7 +11,7 @@ type CreateBoardResponse = {
 
 class Board extends React.Component {
   state = {
-    size: 1,
+    size: 10,
     attempts: 1,
   };
 
@@ -77,7 +78,29 @@ class Board extends React.Component {
     return Math.floor(Math.random() * max);
   };
 
+  styles = {
+    rectangle: {
+      with: '20px',
+      height: '20px',
+      border: '2px solid #333',
+    }
+  }
+
   render() {
+    const space = 20;
+    const boardSquares = [];
+
+    let x_position = 0;
+    let y_position = 0;
+
+    for (let row = 1; row <= this.state.size + 1; row++) {
+      for (let col = 1; col <= this.state.size; col++) {
+        y_position = (col * space) - space;
+        boardSquares.push(<rect key={uuidv4()} width={space} height={space} x={x_position} y={y_position} fill="#fff" style={this.styles.rectangle} />);
+      }
+      x_position = (row * space) - space;
+    } 
+
     return (
       <div className="Board">
         <h1>Conway's Game Life</h1>
@@ -86,6 +109,14 @@ class Board extends React.Component {
         <label>Attempts</label>
         <input id="attempts" type="number" min="1" value={this.state.attempts} onChange={this.handleParamsChange} />
         <button type="submit" onClick={this.handleSubmit}>Start new board</button>
+        <svg
+          width={500}
+          height={500}
+          viewBox="0 0 500 500"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          {boardSquares}
+        </svg>
       </div>
     );
   }
