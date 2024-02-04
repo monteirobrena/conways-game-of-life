@@ -21,3 +21,10 @@ services:
       - db
     environment:
       SECRET_KEY_BASE: ${SECRET_KEY_BASE}
+  web:
+    build: ../app-conways-game
+    command: bash -c "npm start"
+    ports:
+      - "3001:3001"
+    depends_on:
+      - api
