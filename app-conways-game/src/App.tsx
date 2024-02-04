@@ -1,24 +1,56 @@
 import React from 'react';
-import logo from './logo.svg';
 import './App.css';
+
+type CreateBoardResponse = {
+  size: number;
+  attempts: number;
+};
+
+async function createBoard() {
+  try {
+    const response = await fetch('boards', {
+      method: 'POST',
+      mode: 'cors',
+      body: JSON.stringify({
+        size: 30,
+        attempts: 10,
+      }),
+      headers: {
+        'Access-Control-Allow-Origin': '*',
+        'Content-Type': 'application/json',
+        Accept: 'application/json',
+      },
+    });
+
+    if (!response.ok) {
+      throw new Error(`Error! status: ${response.status}`);
+    }
+
+    const result = (await response.json()) as CreateBoardResponse;
+
+    console.log('result is: ', JSON.stringify(result, null, 4));
+
+    return result;
+  } catch (error) {
+    if (error instanceof Error) {
+      console.log('error message: ', error.message);
+      return error.message;
+    } else {
+      console.log('unexpected error: ', error);
+      return 'An unexpected error occurred';
+    }
+  }
+}
 
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <button
+        type="submit"
+        onClick={createBoard}
+      >
+        Start
+      </button>
     </div>
   );
 }
