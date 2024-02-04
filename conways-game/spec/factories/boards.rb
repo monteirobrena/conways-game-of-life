@@ -4,10 +4,13 @@ FactoryBot.define do
     attempts { rand(1..10) }
   end
 
+  size = rand(1..30)
+  attempts = rand(1..10)
+
   factory :board_hash, class:Hash do
     defaults = {
-      size: 30,
-      attempts: 10,
+      size: size,
+      attempts: attempts,
       cells: []
     }
     initialize_with{ defaults.merge(attributes) }
