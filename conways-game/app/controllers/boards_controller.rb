@@ -1,14 +1,16 @@
 class BoardsController < ApplicationController
   def board_params
-    params.require(:board).permit([:size, :attempts])
+    params.require(:board).permit([:size, :attempts, cells: [:alive, :x_position, :y_position]])
   end
 
   # POST /boards
   def create
-    @board = Board.new(board_params)
+    @board = Board.new(board_params.except(:cells)) do |board|
+      board.cells.new(board_params[:cells])
+    end
 
     if @board.save
-      render json: { id: @board.id }, status: :created
+      render json: @board, include: ['cells'], status: :created
     else
       render json: @board.errors, status: :unprocessable_entity
     end
