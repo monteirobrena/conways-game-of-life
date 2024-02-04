@@ -94,10 +94,21 @@ class Board extends React.Component {
     let x_position = 0;
     let y_position = 0;
 
+    let cellAlive = false;
+    let fillDead = "#fff";
+    let fillAlive = "#FF512F";
+
     for (let row = 1; row <= this.state.size + 1; row++) {
       for (let col = 1; col <= this.state.size; col++) {
+        cellAlive = false;
         y_position = (col * space) - space;
-        boardSquares.push(<rect key={uuidv4()} width={sizeSquare} height={sizeSquare} x={x_position} y={y_position} fill="#fff" />);
+
+        this.state.cells.forEach((cell) => {
+          if (cell['x_position'] === row && cell['y_position'] === col) {
+            cellAlive = true;
+          }
+        });
+        boardSquares.push(<rect key={uuidv4()} width={sizeSquare} height={sizeSquare} x={x_position} y={y_position} fill={cellAlive ? fillAlive : fillDead} />);
       }
       x_position = (row * space) - space;
     } 
