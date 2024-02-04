@@ -1,6 +1,6 @@
 FactoryBot.define do
   factory :cell do
-    board
+    association :board, factory: :board
 
     alive { true }
     x_position { rand(1..board.size) }
