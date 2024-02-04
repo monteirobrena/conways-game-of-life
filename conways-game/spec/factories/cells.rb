@@ -1,7 +1,9 @@
 FactoryBot.define do
   factory :cell do
-    alive { false }
-    x_position { 1 }
-    y_position { 1 }
+    board
+
+    alive { true }
+    x_position { rand(1..board.size) }
+    y_position { rand(1..board.size) }
   end
 end
