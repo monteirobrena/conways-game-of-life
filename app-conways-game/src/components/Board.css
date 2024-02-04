@@ -1,0 +1,58 @@
+.Board {
+  width: 50%;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+h1 {
+  margin: 1rem;
+  text-align: center;
+}
+
+label {
+  margin: 1rem;
+  font-weight: bold;
+}
+
+input[type=number] {
+  width: 100%;
+  margin: 1rem;
+  font-size: 1rem;
+  font-weight: 700;
+  padding: 1rem 2rem;
+  border-radius: 1rem;
+  display: inline-block;
+  box-sizing: border-box;
+  border: 1px solid #ccc;
+  text-transform: uppercase;
+}
+
+button {
+  border: 0px;
+  display: block;
+  color: white;
+  cursor: pointer;
+  font-weight: 700;
+  transition: 0.5s;
+  user-select: none;
+  margin: 1rem auto;
+  padding: 1rem 2rem;
+  text-align: center;
+  border-radius: 1rem;
+  -webkit-user-select: none;
+  text-transform: uppercase;
+  touch-action: manipulation;
+  background-size: 200% auto;
+  box-shadow: 0px 0px 14px -7px #f09819;
+  background-image: linear-gradient(45deg, #FF512F 0%, #F09819  51%, #FF512F  100%);
+}
+
+button:hover {
+  color: #fff;
+  text-decoration: none;
+  background-position: right center;
+}
+
+button:active {
+  transform: scale(0.95);
+}
