@@ -13,6 +13,7 @@ class Board extends React.Component {
   state = {
     size: 10,
     attempts: 1,
+    cells: []
   };
 
   apiBaseUrl = 'https://bookish-space-fiesta-5vw4vwj9r346q7-3000.app.github.dev';
@@ -24,6 +25,12 @@ class Board extends React.Component {
   };
 
   handleSubmit = async (event: MouseEvent<HTMLButtonElement>) => {
+    const cells = this.getRamdomCells();
+
+    this.setState({
+      cells: cells
+    });
+
     try {
       const response = await fetch(this.apiBaseUrl + '/boards', {
         method: 'POST',
@@ -32,7 +39,7 @@ class Board extends React.Component {
           board: {
             size: this.state.size,
             attempts: this.state.attempts,
-            cells: this.getRamdomCells()
+            cells: cells
           }
         }),
         headers: {
