@@ -6,6 +6,8 @@ describe Board do
   it { should validate_presence_of :size }
   it { should validate_presence_of :attempts }
 
+  it { should accept_nested_attributes_for(:cells) }
+
   describe "creation with cells" do
     let(:board) { build :board }
     let(:cells) { create_list(:cell, 6) }
