@@ -15,7 +15,7 @@ RSpec.describe Cell, type: :model do
   describe "#set_status" do
     let(:board) { build :board, size: 10 }
 
-    it "should set status as alive" do
+    it "should set status as alive if position is inside the board size" do
       cell = build :cell, x_position: 5, y_position: 10
       board.cells = [cell]
       board.save
@@ -25,7 +25,7 @@ RSpec.describe Cell, type: :model do
       expect(cell.alive).to eql(true)
     end
 
-    it "should set status as not alive" do
+    it "should set status as not alive if position is outside the board size" do
       cell = build :cell, x_position: 50
       board.cells = [cell]
       board.save
