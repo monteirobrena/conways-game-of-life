@@ -10,10 +10,13 @@ type CreateBoardResponse = {
 };
 
 class Board extends React.Component {
+  board = { cells: [] } as CreateBoardResponse;
+
   state = {
     size: 10,
     attempts: 1,
-    cells: []
+    cells: [],
+    board: this.board
   };
 
   apiBaseUrl = 'https://bookish-space-fiesta-5vw4vwj9r346q7-3000.app.github.dev';
@@ -54,6 +57,10 @@ class Board extends React.Component {
       }
 
       const result = (await response.json()) as CreateBoardResponse;
+      this.setState({
+        board: result
+      });
+
       console.log('result is: ', JSON.stringify(result, null, 4));
       return result;
     } catch (error) {
@@ -98,20 +105,20 @@ class Board extends React.Component {
     let fillDead = "#fff";
     let fillAlive = "#FF512F";
 
-    for (let row = 1; row <= this.state.size + 1; row++) {
+    for (let row = 1; row <= this.state.size; row++) {
       for (let col = 1; col <= this.state.size; col++) {
         cellAlive = false;
+        x_position = (row * space) - space;
         y_position = (col * space) - space;
 
-        this.state.cells.forEach((cell) => {
-          if (cell['x_position'] === row && cell['y_position'] === col) {
+        this.state.board.cells.forEach((cell) => {
+          if (cell['x_position'] === col && cell['y_position'] === row) {
             cellAlive = true;
           }
         });
         boardSquares.push(<rect key={uuidv4()} width={sizeSquare} height={sizeSquare} x={x_position} y={y_position} fill={cellAlive ? fillAlive : fillDead} />);
       }
-      x_position = (row * space) - space;
-    } 
+    }
 
     return (
       <div className="Board">
