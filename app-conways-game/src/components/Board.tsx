@@ -82,19 +82,13 @@ class Board extends React.Component {
   }
 
   getRandomNumber(max: number) {
-    return Math.floor(Math.random() * max);
+    const min = 1;
+    return Math.floor(Math.random() * (max - min + 1)) + min;
   };
-
-  styles = {
-    rectangle: {
-      with: '20px',
-      height: '20px',
-      border: '2px solid #333',
-    }
-  }
 
   render() {
     const space = 20;
+    const sizeSquare = 18;
     const boardSquares = [];
 
     let x_position = 0;
@@ -103,7 +97,7 @@ class Board extends React.Component {
     for (let row = 1; row <= this.state.size + 1; row++) {
       for (let col = 1; col <= this.state.size; col++) {
         y_position = (col * space) - space;
-        boardSquares.push(<rect key={uuidv4()} width={space} height={space} x={x_position} y={y_position} fill="#fff" style={this.styles.rectangle} />);
+        boardSquares.push(<rect key={uuidv4()} width={sizeSquare} height={sizeSquare} x={x_position} y={y_position} fill="#fff" />);
       }
       x_position = (row * space) - space;
     } 
