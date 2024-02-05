@@ -98,7 +98,7 @@ RSpec.describe Cell, type: :model do
     let(:board) { build :board, size: 10 }
 
     it "should set status as alive if position is inside the board size" do
-      cell = build :cell, x_position: 5, y_position: 5
+      cell = create :cell, board: board, x_position: 5, y_position: 5
       board.cells = [cell]
       board.save
 
