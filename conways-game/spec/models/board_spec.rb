@@ -19,13 +19,37 @@ describe Board do
   end
 
   describe "#set_next_state" do
-    it "triggers a callback after create" do
+    it "call set_cell_status after set_next_state" do
       board = build :board
       board.save
 
       expect(board).to receive(:set_cell_status)
 
       board.set_next_state
+    end
+
+    it "increment attempts_performed after set_next_state" do
+      board = build :board
+      board.save
+
+      expect(board).to receive(:increment)
+
+      board.set_next_state
+    end
+  end
+
+  describe "#check_if_have_attempts" do
+    it "should be have attempts to perform" do
+      board = create :board, attempts: 1
+
+      expect(board.check_if_have_attempts).to eql(true)
+    end
+
+    it "should not be have attempts to perform" do
+      board = create :board, attempts: 1
+      board.set_next_state
+
+      expect(board.check_if_have_attempts).to eql(false)
     end
   end
 

@@ -14,6 +14,11 @@ class Board < ApplicationRecord
   end
 
   def set_next_state
+    increment!(:attempts_performed)
     set_cell_status
+  end
+
+  def check_if_have_attempts
+    attempts > attempts_performed
   end
 end

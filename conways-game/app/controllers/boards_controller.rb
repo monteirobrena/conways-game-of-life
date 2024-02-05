@@ -19,8 +19,14 @@ class BoardsController < ApplicationController
    # GET /boards/{:id}
   def index
     @board = Board.find(params[:id])
-    @board.set_next_state
 
-    render json: @board, include: ['cells'], status: :ok
+    if @board.check_if_have_attempts
+      @board.set_next_state
+      render json: @board, include: ['cells'], status: :ok
+    else
+      render json: {
+        message: "The board did not reach completion after the maximum number of attempts"
+      }, status: :unprocessable_entity
+    end
   end
 end
