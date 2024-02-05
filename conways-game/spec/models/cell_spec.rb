@@ -39,16 +39,6 @@ RSpec.describe Cell, type: :model do
   describe "#get_neighbors" do
     let(:board) { build :board, size: 10 }
 
-    it "should not get neighbors" do
-      cell = build(:cell, x_position: 5, y_position: 5)
-      board.cells = [cell]
-      board.save
-
-      expect(cell.get_neighbors).to_not be_empty
-      expect(cell.get_neighbors.size).to eql(8)
-      expect(cell.get_neighbors).to eql(Array.new(8))
-    end
-
     it "should get neighbors" do
       cell = build(:cell, x_position: 10, y_position: 10)
       neighbor_cell = build(:cell, x_position: 9, y_position: 10)
@@ -58,6 +48,17 @@ RSpec.describe Cell, type: :model do
       expect(cell.get_neighbors).to_not be_empty
       expect(cell.get_neighbors.size).to eql(8)
       expect(cell.get_neighbors).to_not eql(Array.new(8))
+    end
+
+    it "should not get neighbors" do
+      cell = build(:cell, x_position: 5, y_position: 5)
+      neighbor_cell = build(:cell, x_position: 10, y_position: 10)
+      board.cells = [cell, neighbor_cell]
+      board.save
+
+      expect(cell.get_neighbors).to_not be_empty
+      expect(cell.get_neighbors.size).to eql(8)
+      expect(cell.get_neighbors).to eql(Array.new(8))
     end
   end
 end
