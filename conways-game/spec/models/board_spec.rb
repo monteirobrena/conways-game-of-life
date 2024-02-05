@@ -18,6 +18,17 @@ describe Board do
     end
   end
 
+  describe "#set_next_state" do
+    it "triggers a callback after create" do
+      board = build :board
+      board.save
+
+      expect(board).to receive(:set_cell_status)
+
+      board.set_next_state
+    end
+  end
+
   describe "creation with cells" do
     let(:board) { build :board }
     let(:cells) { create_list(:cell, 6) }
