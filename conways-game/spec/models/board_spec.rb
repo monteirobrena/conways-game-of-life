@@ -8,6 +8,16 @@ describe Board do
 
   it { should accept_nested_attributes_for(:cells) }
 
+  describe "#set_cell_status" do
+    it "triggers a callback after create" do
+      board = build :board
+
+      expect(board).to receive(:set_cell_status)
+
+      board.save
+    end
+  end
+
   describe "creation with cells" do
     let(:board) { build :board }
     let(:cells) { create_list(:cell, 6) }
