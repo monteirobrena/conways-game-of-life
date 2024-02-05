@@ -21,4 +21,9 @@ class Board < ApplicationRecord
   def check_if_have_attempts
     attempts > attempts_performed
   end
+
+  def check_if_reached_conclusion
+    dead_cells = Cell.where(board: self, alive: false)
+    cells.size == dead_cells.size
+  end
 end

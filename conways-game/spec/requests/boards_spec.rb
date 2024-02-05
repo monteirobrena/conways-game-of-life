@@ -72,8 +72,8 @@ RSpec.describe "Boards", type: :request do
       expect(response_parsed_body["cells"].size).to eq(3)
     end
 
-    it "returns error when getting the next state after maximum attempts allowed" do
-      board = create(:board, attempts: 2, cells: create_list(:cell, 3))
+    it "returns error when getting the next state after maximum attempts allowed and board did not reach completion" do
+      board = create(:board, attempts: 2, cells: create_list(:cell, 3, alive: false))
 
       get "/boards#index", params: { id: board.id }, headers: headers
 
@@ -98,9 +98,9 @@ RSpec.describe "Boards", type: :request do
       response_parsed_body = JSON.parse(response.body)
 
       expect(response.content_type).to eq("application/json; charset=utf-8")
-      expect(response).to have_http_status(:unprocessable_entity)
+      expect(response).to have_http_status(:ok)
       expect(response_parsed_body).to have_key("message")
-      expect(response_parsed_body["message"]).to eq("The board did not reach completion after the maximum number of attempts")
+      expect(response_parsed_body["message"]).to eq("The board completed")
       expect(response_parsed_body).to_not have_key("cells")
       expect(response_parsed_body).to_not have_key("attempts_performed")
     end
