@@ -28,4 +28,8 @@ class Cell < ApplicationRecord
 
     cells_neighbors
   end
+
+  def count_neighbors
+    get_neighbors.compact!.count
+  end
 end

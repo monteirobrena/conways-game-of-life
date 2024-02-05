@@ -61,4 +61,27 @@ RSpec.describe Cell, type: :model do
       expect(cell.get_neighbors).to eql(Array.new(8))
     end
   end
+
+  describe "#count_neighbors" do
+    let(:board) { build :board, size: 10 }
+
+    it "should found count neighbors" do
+      cell = build(:cell, x_position: 1, y_position: 1)
+      neighbor_cell = build(:cell, x_position: 1, y_position: 2)
+      board.cells = [cell, neighbor_cell]
+      board.save
+
+      expect(cell.count_neighbors).to_not be_nil
+      expect(cell.count_neighbors).to eql(1)
+    end
+
+    it "should not found neighbors" do
+      cell = build(:cell, x_position: 1, y_position: 1)
+      board.cells = [cell]
+      board.save
+
+      expect(cell.count_neighbors).to_not be_nil
+      expect(cell.count_neighbors).to eql(0)
+    end
+  end
 end
