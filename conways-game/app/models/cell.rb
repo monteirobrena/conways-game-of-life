@@ -11,4 +11,21 @@ class Cell < ApplicationRecord
       self.update(alive: false)
     end
   end
+
+  def get_neighbors
+    cells_neighbors = []
+
+    cells_neighbors << Cell.find_by(x_position: self.x_position, y_position: self.y_position - 1)
+    cells_neighbors << Cell.find_by(x_position: self.x_position, y_position: self.y_position + 1)
+
+    cells_neighbors << Cell.find_by(x_position: self.x_position - 1, y_position: self.y_position)
+    cells_neighbors << Cell.find_by(x_position: self.x_position - 1, y_position: self.y_position - 1)
+    cells_neighbors << Cell.find_by(x_position: self.x_position - 1, y_position: self.y_position + 1)
+
+    cells_neighbors << Cell.find_by(x_position: self.x_position + 1, y_position: self.y_position)
+    cells_neighbors << Cell.find_by(x_position: self.x_position + 1, y_position: self.y_position - 1)
+    cells_neighbors << Cell.find_by(x_position: self.x_position + 1, y_position: self.y_position + 1)
+
+    cells_neighbors
+  end
 end
