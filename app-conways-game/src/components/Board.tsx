@@ -74,6 +74,42 @@ class Board extends React.Component {
     }
   };
 
+  handleNext = async (event: MouseEvent<HTMLButtonElement>) => {
+    try {
+      const response = await fetch(this.apiBaseUrl + '/boards/?id=' + this.state.board.id, {
+        method: 'GET',
+        mode: 'cors',
+        headers: {
+          'Access-Control-Allow-Origin': '*',
+          'Content-Type': 'application/json',
+          Accept: 'application/json',
+        },
+      });
+
+      if (!response.ok) {
+        throw new Error(`Error! status: ${response.status}`);
+      }
+
+      const result = (await response.json()) as CreateBoardResponse;
+      this.setState({
+        board: result,
+        cells: result.cells
+      });
+
+      console.log('result is: ', JSON.stringify(result, null, 4));
+
+      return result;
+    } catch (error) {
+      if (error instanceof Error) {
+        console.log('error message: ', error.message);
+        return error.message;
+      } else {
+        console.log('unexpected error: ', error);
+        return 'An unexpected error occurred';
+      }
+    }
+  };
+
   getRamdomCells() {
     let cells = [];
 
@@ -128,6 +164,7 @@ class Board extends React.Component {
         <label>Attempts</label>
         <input id="attempts" type="number" min="1" value={this.state.attempts} onChange={this.handleParamsChange} />
         <button type="submit" onClick={this.handleSubmit}>Start new board</button>
+        <button type="submit" onClick={this.handleNext}>Get next state</button>
         <svg
           width={500}
           height={500}
