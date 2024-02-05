@@ -12,4 +12,8 @@ class Board < ApplicationRecord
       cell.set_status
     end
   end
+
+  def set_next_state
+    set_cell_status
+  end
 end

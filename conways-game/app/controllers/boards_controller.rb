@@ -15,4 +15,12 @@ class BoardsController < ApplicationController
       render json: @board.errors, status: :unprocessable_entity
     end
   end
+
+   # GET /boards/{:id}
+  def index
+    @board = Board.find(params[:id])
+    @board.set_next_state
+
+    render json: @board, include: ['cells'], status: :ok
+  end
 end

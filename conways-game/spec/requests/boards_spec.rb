@@ -33,4 +33,20 @@ RSpec.describe "Boards", type: :request do
       expect(response_parsed_body["cells"].size).to eq(3)
     end
   end
+
+  describe "GET /index" do
+    headers = { "ACCEPT" => "application/json" }
+
+    it "returns success when get next state" do
+      board = create :board, cells: create_list(:cell, 3)
+
+      get "/boards#index", params: { id: board.id }, headers: headers
+
+      response_parsed_body = JSON.parse(response.body)
+
+      expect(response.content_type).to eq("application/json; charset=utf-8")
+      expect(response).to have_http_status(:ok)
+      expect(response_parsed_body["cells"].size).to eq(3)
+    end
+  end
 end
